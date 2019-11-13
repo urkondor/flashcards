@@ -33,8 +33,11 @@ export class AppComponent {
 
   // : corresponds to ($event) in template
   handleDelete(id: number) {
-    const flashId = this.flashs.indexOf(flash => .id === id);
-    this.flashs.splice(flashId, 1);
+    const flashToDelete = this.flashs.filter(flash => flash.id === id);
+    if (flashToDelete.length > 0) {
+      const indexToDelete = this.flashs.indexOf(flashToDelete[0]);
+      this.flashs.splice(indexToDelete, 1);
+    }
   }
 
   handleEdit(id: number) {

@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { Flash } from './flash.model';
+
+function getRandomNumber() {
+  return Math.floor(Math.random() * 10000);
+}
 
 @Component({
   selector: 'app-root',
@@ -6,5 +11,51 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'flashcards';
+  flashs: Flash[] = [{
+    question: 'Question 1',
+    answer: 'Answer 1',
+    show: false,
+    id: getRandomNumber(),
+  }, {
+    question: 'Question 2',
+    answer: 'Answer 2',
+    show: false,
+    id: getRandomNumber(),
+  }, {
+    question: 'Question 3',
+    answer: 'Answer 3',
+    show: false,
+    id: getRandomNumber(),
+  }];
+
+  editing = false;
+  editingId: number;
+
+  // : corresponds to ($event) in template
+  handleDelete(id: number) {
+    const flashId = this.flashs.indexOf(flash => .id === id);
+    this.flashs.splice(flashId, 1);
+  }
+
+  handleEdit(id: number) {
+    this.editing = true;
+    this.editingId = id;
+    // add editing logic after adding the form
+  }
+
+  handleRememberedChange({id, flag}) {
+    const flash = this.flashs.find(flash => flash.id === id);
+    flash.remembered = flag;
+  }
+
+  trackByFlashId(index, flashs) {
+    return flashs.id;
+  }
+
+  handleToggleCard(id: number) {
+    const flash = this.flashs.find(flash => flash.id === id);
+    flash.show = !flash.show;
+  }
+
 }
+
